@@ -27,6 +27,7 @@
                                 <a href="{{ route("user.profile") }}" role="button">
                                     {{ Auth::user()->name }}
                                 </a>
+                               
                                 <div >
                                     <a href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
@@ -43,6 +44,16 @@
                         <li >
                             <a href="{{ route('quizzes.quizzes') }}">quizzes</a>
                         </li>
+                        @if (auth()->check() && auth()->user()->name === 'admin')
+                        <li>
+                            <a href="{{ route("admin.create") }}" role="button">
+                            crear quiz
+                        </a></li>
+                        <li>
+                            <a href="{{ route("admin.list") }}" role="button">
+                            Ver Quizzes
+                        </a></li>
+                        @endif
                     </ul> <main >
             @yield('content')
         </main>

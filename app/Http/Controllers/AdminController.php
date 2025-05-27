@@ -14,7 +14,14 @@ class AdminController extends Controller
             return view("admin.create");
         return redirect("404");
     }
-
+    public function listQuizzes(){
+        $quizzes= Quiz::all();
+        return view("admin.list", compact("quizzes"));
+    }
+    public function deleteQuiz($id){
+        Quiz::find($id)->delete();
+        return redirect()->route('admin.list');
+    }
     public function storeQuiz(Request $request)
     {
         $validated = $request->validate([
