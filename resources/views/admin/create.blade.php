@@ -19,7 +19,6 @@
     <input type="file" name="quiz[image]" accept="image/*" required>
   </label><br><br>
   <div id="questionsContainer">
-    <!-- Preguntas se insertan aquí -->
   </div>
 
   <button type="button" onclick="addQuestion()">Agregar Pregunta</button><br><br>
@@ -67,7 +66,6 @@
     questionIndex++;
   }
 
-  // Form submission (debugging only)
   document.getElementById('quizForm').addEventListener('submit', function (e) {
     const formData = new FormData(this);
     const obj = Object.fromEntries(formData.entries());

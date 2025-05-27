@@ -22,16 +22,20 @@ class QuizController extends Controller
         $questions = Question::with('answers')->where('quiz_id', $id)->get();
         return view("quizzes.quiz", compact('quiz', 'questions'));
     }
-    public function submit(Request $request)
+    public function submit(Request $request, $id)
     {
+        $questionsCount = Quiz::withCount('questions')->where('id', $id)->value('questions_count');
         $validated = $request->validate([
-            'answers' => 'required|array',
+            'answers' => ['required', 'array', "size:$questionsCount"],
             'answers.*' => 'required|integer|exists:answers,id',
+        ], [
+            'answers.size' => 'Debes responder todas las preguntas.',
         ]);
-        $userId = Auth::user() ? Auth::id() : 0;
 
+        $userId = Auth::user() ? Auth::id() : 0;
         $attempt = QuizAttempt::create([
             'user_id' => $userId,
+            'quiz_id' => $id,
         ]);
         foreach ($validated['answers'] as $questionId => $answerId) {
             UserAnswer::create([
@@ -41,10 +45,13 @@ class QuizController extends Controller
                 'quiz_attempt_id' => $attempt->id,
             ]);
         }
-        $userAnswers = UserAnswer::with(['answer', 'question'])
-        ->where('quiz_attempt_id', $attempt->id)
-        ->get();
-
-    return view('quiz.results', compact('userAnswers'));
+        return redirect()->route('quiz.results', ["attempt" => $attempt->id]);
+    }
+    public function results($attemptId)
+    {
+        $userAnswers = UserAnswer::with(['answer', 'question.answers'])
+            ->where('quiz_attempt_id', $attemptId)
+            ->get();
+        return view('quiz.results', compact('userAnswers'));
     }
 }

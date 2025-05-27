@@ -1,3 +1,5 @@
+@extends('layouts.app')
+@section('content')
 <h2>Resultados de tu intento</h2>
 
 @foreach ($userAnswers as $userAnswer)
@@ -10,7 +12,6 @@
             <span style="color: red; font-weight: bold;">(Incorrecta)</span>
             <br>
             <strong>Respuesta correcta:</strong> 
-            {{-- Mostrar la opción correcta --}}
             @php
                 $correctAnswer = $userAnswer->question->answers->firstWhere('is_correct', true);
             @endphp
@@ -18,3 +19,4 @@
         @endif
     </div>
 @endforeach
+@endsection

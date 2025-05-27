@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\QuizAttempt;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function profile(){
-        return view("user.profile", ["user"=> Auth::user()]);
+    public function profile()
+    {
+        $user = Auth::User();
+        $attempts = Auth::User()
+            ->quizAttempts()
+            ->with('quiz')
+            ->latest()
+            ->get();
+        return view("user.profile", compact('attempts'));
     }
 }

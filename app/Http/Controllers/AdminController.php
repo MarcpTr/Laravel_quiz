@@ -5,16 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Quiz;
+
 class AdminController extends Controller
 {
     public function createQuiz()
     {
-        if(Auth::user()->name=="admin")
-        return view("admin.create");
-    return redirect("404");
+        if (Auth::user()->name == "admin")
+            return view("admin.create");
+        return redirect("404");
     }
-  
-    public function storeQuiz(Request $request){
+
+    public function storeQuiz(Request $request)
+    {
         $validated = $request->validate([
             'quiz.title' => 'required|string|max:255',
             'quiz.description' => 'required|string',
@@ -36,20 +38,19 @@ class AdminController extends Controller
             'description' => $quizData['description'],
             'imageRef' => $path,
         ]);
-        
-    foreach ($quizData['questions'] as $qData) {
-        $question = $quiz->questions()->create([
-            'question' => $qData['question']
-        ]);
 
-        foreach ($qData['answers'] as $index => $answerData) {
-            $question->answers()->create([
-                'option' => $answerData['option'],
-                'is_correct' => $index == $qData['correct']
+        foreach ($quizData['questions'] as $qData) {
+            $question = $quiz->questions()->create([
+                'question' => $qData['question']
             ]);
-        }
-    }
-        return response()->json(['message' => 'Quiz recibido correctamente', 'data' => $quizData]);
 
+            foreach ($qData['answers'] as $index => $answerData) {
+                $question->answers()->create([
+                    'option' => $answerData['option'],
+                    'is_correct' => $index == $qData['correct']
+                ]);
+            }
+        }
+        return response()->json(['message' => 'Quiz recibido correctamente', 'data' => $quizData]);
     }
 }
