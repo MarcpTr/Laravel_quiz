@@ -2,17 +2,25 @@
 <p>{{ $quiz->description}}</p>
 <img src="{{ asset('storage/' . $quiz->imageRef) }}" alt="Imagen del quiz">
 
-@foreach ($questions as $question)
+<form action="{{ route('submit', $quiz->id) }}" method="POST">
+    @csrf
+    @foreach ($questions as $question)
     <div>
         <strong>{{ $question->question }}</strong>
         <ul>
             @foreach ($question->answers as $answer)
-                <li>{{ $answer->option }} 
-                    @if ($answer->is_correct)
-                        <strong>(Correcta)</strong>
-                    @endif
+                <li>
+                    <label>
+                        <input type="radio" 
+                               name="answers[{{ $question->id }}]" 
+                               value="{{ $answer->id }}">
+                        {{ $answer->option }}
+                    </label>
                 </li>
             @endforeach
         </ul>
     </div>
 @endforeach
+<button type="submit">Enviar respuestas</button>
+
+</form>

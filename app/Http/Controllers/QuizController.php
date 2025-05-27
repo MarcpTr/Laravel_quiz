@@ -18,4 +18,10 @@ class QuizController extends Controller
         $questions = Question::with('answers')->where('quiz_id', $id)->get();
         return view("quizzes.quiz", compact('quiz', 'questions'));
     }
+    public function submit(Request $request){
+        $validated = $request->validate([
+            'answers' => 'required|array',
+            'answers.*' => 'required|integer|exists:answers,id',
+        ]);
+    }
 }
