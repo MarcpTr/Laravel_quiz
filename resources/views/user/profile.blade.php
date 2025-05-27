@@ -5,7 +5,7 @@ Profile
 
 @foreach($attempts as $attempt)
     <div class="attempt">
-        <h3>Intento # {{ $attempt->id }} en quiz: {{$attempt->quiz->title}} - Fecha: {{$attempt->created_at }}</h3>
+        <h3>Intento en quiz: {{$attempt->quiz->title}} - Fecha: {{$attempt->created_at }}</h3>
         <ul>
             @foreach($attempt->userAnswers as $answer)
                 <li>

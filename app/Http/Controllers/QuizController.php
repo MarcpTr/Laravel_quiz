@@ -19,6 +19,8 @@ class QuizController extends Controller
     public function quiz($id)
     {
         $quiz = Quiz::find($id);
+        if ($quiz === null)
+            abort(404);
         $questions = Question::with('answers')->where('quiz_id', $id)->get();
         return view("quizzes.quiz", compact('quiz', 'questions'));
     }
@@ -52,6 +54,9 @@ class QuizController extends Controller
         $userAnswers = UserAnswer::with(['answer', 'question.answers'])
             ->where('quiz_attempt_id', $attemptId)
             ->get();
+        if ($userAnswers->isEmpty()) {
+            abort(404);
+        }
         return view('quiz.results', compact('userAnswers'));
     }
 }

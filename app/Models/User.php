@@ -50,7 +50,7 @@ class User extends Authenticatable
         return $this->hasMany(UserAnswer::class);
     }
     public function quizAttempts()
-{
-    return $this->hasMany(QuizAttempt::class);
-}
+    {
+        return $this->hasMany(QuizAttempt::class);
+    }
 }

@@ -13,8 +13,9 @@ class UserController extends Controller
         $attempts = Auth::User()
             ->quizAttempts()
             ->with('quiz')
-            ->latest()
+            ->latest()// muestra primero los ultimos
             ->get();
+          
         return view("user.profile", compact('attempts'));
     }
 }
