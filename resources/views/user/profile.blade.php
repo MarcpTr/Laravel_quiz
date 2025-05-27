@@ -4,21 +4,25 @@
 Profile
 
 @foreach($attempts as $attempt)
-    <div class="attempt">
-        <h3>Intento en quiz: {{$attempt->quiz->title}} - Fecha: {{$attempt->created_at }}</h3>
+    <div>
+        <h3>
+            Intento en quiz: <strong>{{ $attempt->quiz->title }}</strong> - 
+            Fecha: {{ $attempt->created_at->format('d/m/Y H:i') }}
+        </h3>
         <ul>
             @foreach($attempt->userAnswers as $answer)
                 <li>
-                    Pregunta: {{ $answer->question->question }} <br>
-                    Respuesta: {{ $answer->answer->option }} 
+                    <strong>Pregunta:</strong> {{ $answer->question->question }}<br>
+                    <strong>Respuesta:</strong> {{ $answer->answer->option }} 
                     @if($answer->answer->is_correct)
-                        <strong style="color: green">✔ Correcta</strong>
+                        <span style="color: green;">✔ Correcta</span>
                     @else
-                        <strong style="color: red">✘ Incorrecta</strong>
+                        <span style="color: red;">✘ Incorrecta</span>
                     @endif
                 </li>
             @endforeach
         </ul>
     </div>
 @endforeach
+
 @endsection
