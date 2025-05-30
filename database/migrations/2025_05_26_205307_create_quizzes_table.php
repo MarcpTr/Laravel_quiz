@@ -17,6 +17,14 @@ return new class extends Migration
             $table->text('description');
             $table->string('imageRef');
             $table->timestamps();
+            $table->foreignId('category_id')
+            ->nullable()
+            ->constrained('categories')
+            ->onDelete('set null');
+            $table->foreignId("level_id")
+            ->nullable()
+            ->constrained("levels")
+            ->ondelete("set null");
         });
     }
 

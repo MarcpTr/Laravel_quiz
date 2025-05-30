@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Answer extends Model
 {
    
-    protected $fillable = ['option', 'is_correct', 'question_id'];
+    protected $fillable = ['answer_text', 'is_correct', 'question_id'];
 
     protected $casts = [
         'is_correct' => 'boolean',

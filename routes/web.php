@@ -15,7 +15,6 @@ Route::get('/quiz/results/{attempt}', [QuizController::class, 'results'])->name(
 Route::middleware(['middleware' => 'auth'])->group(function(){
     Route::get("/profile", [UserController::class, "profile"])->name("user.profile");
     Route::get("/admin/quizzes/", [AdminController::class, "listQuizzes"])->name("admin.list");
-
     Route::get("/admin/quizzes/create", [AdminController::class, "createQuiz"])->name("admin.create");
     Route::delete("/admin/quizzes/delete/{id}", [AdminController::class, "deleteQuiz"])->name("admin.delete");
     Route::post("/admin/quizzes", [AdminController::class, "storeQuiz"])->name("admin.store");

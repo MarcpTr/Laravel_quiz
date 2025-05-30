@@ -38,6 +38,7 @@ class QuizController extends Controller
         $attempt = QuizAttempt::create([
             'user_id' => $userId,
             'quiz_id' => $id,
+            "attempt_number" => "7"
         ]);
         foreach ($validated['answers'] as $questionId => $answerId) {
             UserAnswer::create([

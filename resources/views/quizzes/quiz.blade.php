@@ -17,7 +17,7 @@
     @csrf
     @foreach ($questions as $question)
     <div>
-        <strong>{{ $question->question }}</strong>
+        <strong>{{ $question->question_text }}</strong>
         <ul>
             @foreach ($question->answers as $answer)
                 <li>
@@ -25,7 +25,7 @@
                         <input type="radio" 
                                name="answers[{{ $question->id }}]" 
                                value="{{ $answer->id }}" required>
-                        {{ $answer->option }}
+                        {{ $answer->answer_text }}
                     </label>
                 </li>
             @endforeach

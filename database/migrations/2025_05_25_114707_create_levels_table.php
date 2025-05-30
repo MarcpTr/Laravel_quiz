@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('user_answers', function (Blueprint $table) {
-            $table->foreignId('quiz_attempt_id')->nullable()->constrained('quiz_attempts')->onDelete('cascade');
+        Schema::create('levels', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('user_answers', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('levels');
     }
 };

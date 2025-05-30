@@ -12,8 +12,8 @@ Profile
         <ul>
             @foreach($attempt->userAnswers as $answer)
                 <li>
-                    <strong>Pregunta:</strong> {{ $answer->question->question }}<br>
-                    <strong>Respuesta:</strong> {{ $answer->answer->option }} 
+                    <strong>Pregunta:</strong> {{ $answer->question->question_text }}<br>
+                    <strong>Respuesta:</strong> {{ $answer->answer->answer_text }} 
                     @if($answer->answer->is_correct)
                         <span style="color: green;">✔ Correcta</span>
                     @else
