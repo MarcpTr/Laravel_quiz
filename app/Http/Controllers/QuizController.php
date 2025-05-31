@@ -35,10 +35,13 @@ class QuizController extends Controller
         ]);
 
         $userId = Auth::user() ? Auth::id() : 0;
+        $attemptNumber = QuizAttempt::where('user_id', $userId)
+            ->where('quiz_id', $id)
+            ->count() + 1;
         $attempt = QuizAttempt::create([
             'user_id' => $userId,
             'quiz_id' => $id,
-            "attempt_number" => "7"
+            "attempt_number" => $attemptNumber
         ]);
         foreach ($validated['answers'] as $questionId => $answerId) {
             UserAnswer::create([
