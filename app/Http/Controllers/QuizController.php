@@ -11,9 +11,21 @@ use Illuminate\Support\Facades\Auth;
 
 class QuizController extends Controller
 {
-    public function quizzes()
+    public function quizzes(Request $request)
     {
-        $quizzes = Quiz::all();
+        $query = Quiz::query();
+
+        if ($request->has('level')) {
+            $query->where('level_id', $request->query('level'));
+        }
+
+        if ($request->has('category')) {
+            $query->where('category_id', $request->query('category'));
+        }
+
+        $quizzes = $query->get();
+
+        return view("quizzes.quizzes", ["quizzes" => $quizzes]);
         return view("quizzes.quizzes", ["quizzes" => $quizzes]);
     }
     public function quiz($id)

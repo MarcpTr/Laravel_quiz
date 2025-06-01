@@ -9,6 +9,7 @@ Auth::routes();
 
 Route::get('/', function () {return view('index');});
 Route::get('/quizzes', [QuizController::class, 'quizzes'])->name('quizzes.quizzes');
+Route::get('/quizzes', [QuizController::class, 'quizzes'])->name('quizzes.quizzes');
 Route::get('/quiz/{id}', [QuizController::class, 'quiz'])->name('quizzes.quiz');
 Route::post("/quiz/{id}/submit", [QuizController::class, "submit"])->name("submit");
 Route::get('/quiz/results/{attempt}', [QuizController::class, 'results'])->name('quiz.results');

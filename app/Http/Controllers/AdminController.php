@@ -69,6 +69,6 @@ class AdminController extends Controller
                 ]);
             }
         }
-        return response()->json(['message' => 'Quiz recibido correctamente', 'data' => $quizData]);
+        return redirect()->route('admin.list');
     }
 }
