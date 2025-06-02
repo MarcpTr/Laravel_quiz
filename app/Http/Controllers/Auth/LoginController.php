@@ -37,4 +37,28 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
     }
+    protected function credentials(\Illuminate\Http\Request $request)
+    {
+        $login = $request->input('login');
+
+        $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
+
+        return [
+            $field => $login,
+            'password' => $request->input('password'),
+        ];
+    }
+    protected function validateLogin(\Illuminate\Http\Request $request)
+    {
+        $request->validate([
+            'login' => 'required|string',
+            'password' => 'required|string',
+        ]);
+    }
+    protected function sendFailedLoginResponse(\Illuminate\Http\Request $request)
+{
+    throw \Illuminate\Validation\ValidationException::withMessages([
+        'login' => ['Las credenciales no son válidas.'],
+    ]);
+}
 }

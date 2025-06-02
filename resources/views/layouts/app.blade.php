@@ -16,40 +16,38 @@
     <header class="sticky h-12 top-0 w-full z-50 bg-blue-600  px-8">
         <nav class="flex justify-between h-full">
             <div class="content-center">
-                <a href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                <a href="{{ url('/') }}"> 
+                    Quiz Time
                 </a>
             </div>
             <div class="content-center space-x-8 ">
                 @guest
                     @if (Route::has('login'))
-                        <a href="{{ route('login') }}">{{ __('Login') }}</a>
+                        <a href="{{ route('login') }}">Acceder</a>
                     @endif
                     @if (Route::has('register'))
-                        <a href="{{ route('register') }}">{{ __('Register') }}</a>
+                        <a href="{{ route('register') }}">Registrarse</a>
                     @endif
                 @else
                     <a href="{{ route('user.profile') }}" role="button">
                         {{ Auth::user()->name }}
                     </a>
 
-                 
-
                 @endguest
-                <a href="{{ route('quizzes.quizzes') }}">quizzes</a>
-                <a href="{{ route('quizzes.categories') }}">categories</a>
+                <a href="{{ route('quizzes.quizzes') }}">Cuestionarios</a>
+                <a href="{{ route('quizzes.categories') }}">Categorias</a>
                 @if (auth()->check() && auth()->user()->name === 'admin')
                     <a href="{{ route('admin.create') }}" role="button">
-                        {{ __('crear quiz ') }}
+                        Crear cuestionario
                     </a>
                     <a href="{{ route('admin.list') }}" role="button">
-                        {{ __(' Ver Quizzes') }}
+                        Administar
                     </a>
                 @endif
             </div>
         </nav>
     </header>
-    <main>
+    <main class="flex justify-center">
         @yield('content')
     </main>
 
