@@ -13,8 +13,8 @@ class AdminController extends Controller
     public function createQuiz()
     {
         if (Auth::user()->name == "admin") {
-            $levels= Level::pluck('name', 'id')->toArray();
-            $categories= Category::pluck('name', 'id')->toArray();
+            $levels = Level::pluck('name', 'id')->toArray();
+            $categories = Category::pluck('name', 'id')->toArray();
             return view("admin.create", compact("levels", "categories"));
         }
         return redirect("404");
@@ -28,6 +28,31 @@ class AdminController extends Controller
     {
         Quiz::find($id)->delete();
         return redirect()->route('admin.list');
+    }
+    public function createCategory()
+    {
+        if (Auth::user()->name == "admin") {
+            return view("admin.category");
+        }
+        return redirect("404");
+    }
+    public function storeCategory(Request $request)
+    {
+        $validated = $request->validate([
+            'category.name' => 'required|string|max:255',
+            'category.image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
+        ]);
+        $categoryData = $validated['category'];
+        if ($request->hasFile('category.image')) {
+            $path = $request->file('category.image')->store('categories', 'public');
+        } else {
+            $path = null;
+        }
+        $category = Category::create([
+            'name' => $categoryData['name'],
+            'imageRef' => $path,
+        ]);
+        return redirect()->route('admin.create.category');
     }
     public function storeQuiz(Request $request)
     {
@@ -54,7 +79,7 @@ class AdminController extends Controller
             'description' => $quizData['description'],
             'imageRef' => $path,
             'level_id' => $quizData['level_id'],
-            'category_id' =>$quizData['category_id']
+            'category_id' => $quizData['category_id']
         ]);
 
         foreach ($quizData['questions'] as $qData) {

@@ -1,14 +1,12 @@
 @extends('layouts.app')
 @section('content')
   
-        <div class="flex items-center justify-center w-full transition-opacity opacity-100 duration-750 lg:grow starting:opacity-0">
-            <main class="flex max-w-[335px] w-full flex-col-reverse lg:max-w-4xl lg:flex-row">
-              Los mejores Quizzes de internet
-            </main>
-        </div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+  @foreach ($quizzes as $quiz)
+      <x-quizcard :id="$quiz->id" :description="$quiz->description" :title="$quiz->title" :image="$quiz->imageRef" />
+  @endforeach
+</div>
 
-        @if (Route::has('login'))
-            <div class="h-14.5 hidden lg:block"></div>
-        @endif
+        
 @endsection
 

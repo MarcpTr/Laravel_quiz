@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Quiz;
 use App\Models\Question;
 use App\Models\UserAnswer;
@@ -11,6 +12,14 @@ use Illuminate\Support\Facades\Auth;
 
 class QuizController extends Controller
 {
+    public function index(Request $request)
+    {
+        $quizzes = Quiz::query()->oldest()
+        ->limit(10)
+        ->get();
+     return view("index", ["quizzes" => $quizzes]);
+    }
+
     public function quizzes(Request $request)
     {
         $query = Quiz::query();
@@ -26,7 +35,11 @@ class QuizController extends Controller
         $quizzes = $query->get();
 
         return view("quizzes.quizzes", ["quizzes" => $quizzes]);
-        return view("quizzes.quizzes", ["quizzes" => $quizzes]);
+    }
+    public function categories()
+    {
+        $categories = Category::all();
+        return view("quizzes.categories", compact("categories"));
     }
     public function quiz($id)
     {

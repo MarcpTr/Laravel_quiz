@@ -47,9 +47,9 @@
             </div>
         </nav>
     </header>
-    <main class="flex justify-center">
+    <div class="flex justify-center">
         @yield('content')
-    </main>
+    </div>
 
 </body>
 

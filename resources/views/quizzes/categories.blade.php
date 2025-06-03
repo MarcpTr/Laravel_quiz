@@ -2,8 +2,8 @@
 @section('content')
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
 
-    @foreach ($quizzes as $quiz)
-        <x-quizcard :id="$quiz->id" :description="$quiz->description" :title="$quiz->title" :image="$quiz->imageRef" />
+    @foreach ($categories as $category)
+        <x-categorycard :id="$category->id" :name="$category->name" :image="$category->imageRef"  />
     @endforeach
 </div>
 
