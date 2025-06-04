@@ -1,4 +1,4 @@
-<a href="{{ route('quizzes.quiz', $id) }}"
+<a href="{{ route('quiz.play', $id) }}"
     class="block max-w-sm rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white">
     <img class="w-full h-48 object-cover" src="{{ asset('storage/' . $image) }}" alt="{{ $title }}">
     <div class="p-4">

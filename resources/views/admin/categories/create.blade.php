@@ -1,4 +1,4 @@
-<form class="d-inline" id="quizForm" method="POST" action="{{ route('admin.store.category') }}" enctype="multipart/form-data">
+<form class="d-inline" id="quizForm" method="POST" action="{{ route('categories.store') }}" enctype="multipart/form-data">
 
     @csrf
 

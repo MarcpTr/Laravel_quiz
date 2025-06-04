@@ -1,7 +1,7 @@
 
 <h1>Crear Quiz: </h1>
 
-<form class="d-inline" id="quizForm" method="POST" action="{{ route('admin.store') }}" enctype="multipart/form-data">
+<form class="d-inline" id="quizForm" method="POST" action="{{ route('quizzes.store') }}" enctype="multipart/form-data">
 
     @csrf
    

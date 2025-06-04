@@ -34,14 +34,14 @@
                     </a>
 
                 @endguest
-                <a href="{{ route('quizzes.quizzes') }}">Cuestionarios</a>
-                <a href="{{ route('quizzes.categories') }}">Categorias</a>
+                <a href="{{ route('quizzes.index') }}">Cuestionarios</a>
+                <a href="{{ route('categories.index') }}">Categorias</a>
                 @if (auth()->check() && auth()->user()->name === 'admin')
-                    <a href="{{ route('admin.create') }}" role="button">
+                    <a href="{{ route('quizzes.create') }}" role="button">
                         Crear cuestionario
                     </a>
-                    <a href="{{ route('admin.list') }}" role="button">
-                        Administar
+                    <a href="{{ route('categories.create') }}" role="button">
+                        Crear categoria
                     </a>
                 @endif
             </div>
