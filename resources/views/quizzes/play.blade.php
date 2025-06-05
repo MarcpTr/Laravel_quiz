@@ -19,8 +19,9 @@
     </div>
 @endif
 
-<form action="{{ route('quiz.submit', $quiz->id) }}" method="POST" class="space-y-6">
+<form id="quizForm" action="{{ route('quiz.submit', $quiz->id) }}" method="POST" class="space-y-6">
     @csrf
+    <input type="hidden" name="quiz_token" value="{{ $token }}">
 
     @foreach ($questions as $question)
     <div class="bg-white p-5 rounded-lg shadow-md">
@@ -41,8 +42,8 @@
 @endforeach
 
 <div class="text-center mt-8">
-<button class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-md transition-colors duration-300" type="submit">Enviar respuestas</button>
+<button id="submitBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-md transition-colors duration-300" type="submit">Enviar respuestas</button>
 </div>
-
 </form>
+
 @endsection

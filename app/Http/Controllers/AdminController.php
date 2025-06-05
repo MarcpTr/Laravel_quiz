@@ -10,12 +10,14 @@ use App\Models\Level;
 
 class AdminController extends Controller
 {
-    
+
     public function index()
     {
-        $quizzes = Quiz::all();
-        return view("admin.quizzes.index", compact("quizzes"));
+        if (Auth::user()->name === "admin") {
+            $quizzes = Quiz::all();
+            return view("admin.quizzes.index", compact("quizzes"));
+        } else {
+            return redirect()->route('quizzes.index');
+        }
     }
-  
- 
 }

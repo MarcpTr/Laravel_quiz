@@ -43,6 +43,9 @@
                     <a href="{{ route('categories.create') }}" role="button">
                         Crear categoria
                     </a>
+                    <a href="{{ route('admin.quizzes.index') }}" role="button">
+                        Lista cuestionarios
+                    </a>
                 @endif
             </div>
         </nav>

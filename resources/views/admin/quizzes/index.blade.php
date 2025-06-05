@@ -6,7 +6,7 @@
             <form action="{{ route('quizzes.destroy', $quiz->id) }}" method="post">
                 @csrf
                 @method('DELETE')
-                <button class="bg-red-500 rounded-2xl px-4 py-2" type="submit">Eliminar</button>
+                <button class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded" type="submit">Eliminar</button>
             </form>
         @endforeach
     </div>

@@ -10,10 +10,11 @@ use App\Models\UserAnswer;
 use App\Models\QuizAttempt;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class QuizController extends Controller
 {
-   
+
 
     public function index(Request $request)
     {
@@ -27,17 +28,26 @@ class QuizController extends Controller
         $quizzes = $query->paginate(10);
         return view("quizzes.index", ["quizzes" => $quizzes]);
     }
-   
+
     public function play($id)
     {
+        $token = (string) Str::uuid();
+        session(['quiz_submit_token' => $token]);
         $quiz = Quiz::find($id);
         if ($quiz === null)
             abort(404);
         $questions = Question::with('answers')->where('quiz_id', $id)->get();
-        return view("quizzes.play", compact('quiz', 'questions'));
+        return view("quizzes.play", compact('quiz', 'questions', 'token'));
     }
     public function submit(Request $request, $id)
     {
+        $submittedToken = $request->input('quiz_token');
+        $sessionToken = session('quiz_submit_token');
+        if (!$submittedToken || $submittedToken !== $sessionToken) {
+            return redirect()->back()->with('error', 'Este formulario ya fue enviado o es inválido.');
+        }
+        session()->forget('quiz_submit_token');
+
         $questionsCount = Quiz::withCount('questions')->where('id', $id)->value('questions_count');
         $validated = $request->validate([
             'answers' => ['required', 'array', "size:$questionsCount"],
