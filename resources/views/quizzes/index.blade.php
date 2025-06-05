@@ -5,7 +5,8 @@
     @foreach ($quizzes as $quiz)
         <x-quizcard :id="$quiz->id" :description="$quiz->description" :title="$quiz->title" :image="$quiz->imageRef" />
     @endforeach
-</div> 
-   {{ $quizzes->withQueryString()->links() }}
+</div > 
+<div class="m-8"> {{ $quizzes->withQueryString()->links() }}</div>
+  
 </div>
 @endsection

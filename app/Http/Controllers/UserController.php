@@ -12,26 +12,44 @@ class UserController extends Controller
     {
         $user = Auth::User();
       
-    $attempts = QuizAttempt::with(['quiz.questions', 'userAnswers.answer'])
+        $attemptsRaw = QuizAttempt::with(['quiz.questions', 'userAnswers.answer'])
         ->where('user_id', $user->id)
-        ->get()
-        ->map(function ($attempt) {
-            $totalQuestions = $attempt->quiz->questions->count();
-
-            $correctAnswers = $attempt->userAnswers->filter(function ($userAnswer) {
-                return $userAnswer->answer->is_correct;
-            })->count();
-
-            return [
-                'quiz_attempt_id' => $attempt->id,
-                'quiz_title' => $attempt->quiz->title,
-                'quiz_image' => $attempt->quiz->imageRef,
-                'attempt_number' => $attempt->attempt_number,
-                'correct_answers_count' => $correctAnswers,
-                'total_questions' => $totalQuestions,
-            ];
-        });
-        return view("user.profile", compact('attempts'));
+        ->get();
+    
+    $totalAnswers = 0;
+    $correctAnswersTotal = 0;
+    $totalQuizzes = $attemptsRaw->count();
+    $uniqueQuizzes = $attemptsRaw->pluck('quiz.id')->unique()->count();
+    
+    $attempts = $attemptsRaw->map(function ($attempt) use (&$totalAnswers, &$correctAnswersTotal) {
+        $totalQuestions = $attempt->quiz->questions->count();
+    
+        $correctAnswers = $attempt->userAnswers->filter(function ($userAnswer) {
+            return $userAnswer->answer->is_correct;
+        })->count();
+    
+        $answerCount = $attempt->userAnswers->count();
+        $totalAnswers += $answerCount;
+        $correctAnswersTotal += $correctAnswers;
+    
+        return [
+            'quiz_attempt_id' => $attempt->id,
+            'quiz_title' => $attempt->quiz->title,
+            'quiz_image' => $attempt->quiz->imageRef,
+            'attempt_number' => $attempt->attempt_number,
+            'correct_answers_count' => $correctAnswers,
+            'total_questions' => $totalQuestions,
+        ];
+    });
+    
+    $summary = [
+        'different_quizzes' => $uniqueQuizzes,
+        'total_quizzes' => $totalQuizzes,
+        'total_answers' => $totalAnswers,
+        'correct_answers' => $correctAnswersTotal,
+        'attempts' => $attempts,
+    ];
+        return view("user.profile", compact('summary', "user"));
     }
     public function result($attemptId)
     {
