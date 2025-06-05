@@ -26,5 +26,5 @@ Route::middleware(['middleware' => 'auth'])->group(function(){
     Route::post("/quiz", [QuizController::class, "store"])->name("quizzes.store");   
 
     Route::get("/category/create/", [CategoryController::class, "create"])->name("categories.create");
-    Route::post("/create/category", [CategoryController::class, "store"])->name("categories.store");
+    Route::post("/category", [CategoryController::class, "store"])->name("categories.store");
 });
