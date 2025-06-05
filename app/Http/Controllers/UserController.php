@@ -53,8 +53,9 @@ class UserController extends Controller
     }
     public function result($attemptId)
     {
+
         $attempt = QuizAttempt::where('id', $attemptId)
-            ->where('user_id', Auth::id())
+            ->where('user_id', Auth::id() ?? 0)
             ->first();
 
         if (!$attempt) {

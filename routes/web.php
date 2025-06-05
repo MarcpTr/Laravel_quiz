@@ -15,10 +15,10 @@ Route::get('/quizzes', [QuizController::class, 'index'])->name('quizzes.index');
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
 Route::get('/quiz/{id}', [QuizController::class, 'play'])->name('quiz.play');
 Route::post("/quiz/{id}/submit", [QuizController::class, "submit"])->name("quiz.submit");
+Route::get('/result/{attempt}', [UserController::class, 'result'])->name('quiz.results');
 
 Route::middleware(['middleware' => 'auth'])->group(function(){
     Route::get("/profile", [UserController::class, "profile"])->name("user.profile"); 
-    Route::get('/profile/result/{attempt}', [UserController::class, 'result'])->name('quiz.results');
 
     Route::get("/admin/quizzes", [AdminController::class, "index"])->name("admin.quizzes.index");
     Route::get("/quizzes/create", [QuizController::class, "create"])->name("quizzes.create");

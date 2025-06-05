@@ -75,6 +75,7 @@ class QuizController extends Controller
                 'quiz_attempt_id' => $attempt->id,
             ]);
         }
+
         return redirect()->route('quiz.results', ["attempt" => $attempt->id]);
     }
     public function create()
