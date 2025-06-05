@@ -3,7 +3,6 @@
 @section('content')
     <main class="pt-10 px-6 max-w-7xl mx-auto">
 
-        {{-- Información del Usuario --}}
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
             <div>
                 <p class="text-lg font-semibold">👤 {{ $user->name }}</p>
@@ -21,7 +20,7 @@
             </div>
         </div>
 
-        {{-- Resumen --}}
+        
         <h2 class="text-2xl font-bold mb-4">Resumen de Intentos</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             <div class="bg-blue-400 text-white p-4 rounded shadow">
@@ -32,17 +31,16 @@
                 <h5 class="text-lg font-semibold">Intentos Totales</h5>
                 <p class="text-2xl">{{ $summary['total_quizzes'] }}</p>
             </div>
-            <div class="bg-green-200 text-black p-4 rounded shadow">
+            <div class="bg-orange-300 text-black p-4 rounded shadow">
                 <h5 class="text-lg font-semibold">Respuestas Totales</h5>
                 <p class="text-2xl">{{ $summary['total_answers'] }}</p>
             </div>
-            <div class="bg-yellow-300 text-black p-4 rounded shadow">
+            <div class="bg-green-200 text-black p-4 rounded shadow">
                 <h5 class="text-lg font-semibold">Correctas Totales</h5>
                 <p class="text-2xl">{{ $summary['correct_answers'] }}</p>
             </div>
         </div>
 
-        {{-- Detalle de Intentos --}}
         <h3 class="text-xl font-bold mb-4">Detalle de Intentos</h3>
         <div class="overflow-x-auto bg-white shadow rounded-lg">
             <table class="min-w-full divide-y divide-gray-200 text-sm">
