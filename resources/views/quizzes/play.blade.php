@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+    {{ $quiz->title }}
+@endsection
 @section('content')
 <main class="max-w-6xl mx-auto p-6 bg-gray-50">
     <div class="text-center mb-8">

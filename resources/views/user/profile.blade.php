@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+    Perfil de {{ $user->name }}
+@endsection
 
 @section('content')
     <main class="pt-10 px-6 max-w-7xl mx-auto">
@@ -46,7 +49,6 @@
             <table class="min-w-full divide-y divide-gray-200 text-sm">
                 <thead class="bg-gray-100 text-gray-700">
                     <tr>
-                        <th class="px-4 py-3 text-left font-semibold">#</th>
                         <th class="px-4 py-3 text-left font-semibold">Quiz</th>
                         <th class="px-4 py-3 text-left font-semibold">Imagen</th>
                         <th class="px-4 py-3 text-left font-semibold">Intento</th>
@@ -56,21 +58,16 @@
                 </thead>
                 <tbody class="divide-y divide-gray-100">
                     @foreach ($summary['attempts'] as $attempt)
-                        <tr>
-                            <td class="px-4 py-2">{{ $attempt['quiz_attempt_id'] }}</td>
-                            <td class="px-4 py-2">{{ $attempt['quiz_title'] }}</td>
-                            <td class="px-4 py-2">
-                                @if ($attempt['quiz_image'])
-                                    <img src="{{ asset('storage/' . $attempt['quiz_image']) }}" alt="Quiz Image" class="w-14 h-14 object-cover rounded">
-                                @else
-                                    <span class="italic text-gray-400">Sin imagen</span>
-                                @endif
-                            </td>
-                            <td class="px-4 py-2">{{ $attempt['attempt_number'] }}</td>
-                            <td class="px-4 py-2">{{ $attempt['correct_answers_count'] }}</td>
-                            <td class="px-4 py-2">{{ $attempt['total_questions'] }}</td>
-                        </tr>
-                    @endforeach
+                    <x-attempt
+                        :quiz-attempt-id="$attempt['quiz_attempt_id']"
+                        :quiz-title="$attempt['quiz_title']"
+                        :quiz-image="$attempt['quiz_image']"
+                        :attempt-number="$attempt['attempt_number']"
+                        :correct-answers-count="$attempt['correct_answers_count']"
+                        :total-questions="$attempt['total_questions']"
+                    />
+                @endforeach
+                
                 </tbody>
             </table>
         </div>

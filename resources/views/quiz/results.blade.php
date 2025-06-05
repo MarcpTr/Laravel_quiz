@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+    Resultados
+@endsection
 @section('content')
     <main class="max-w-4xl mx-auto p-6 bg-gray-50 rounded-lg shadow-md">
 

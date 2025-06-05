@@ -33,22 +33,24 @@ class QuizController extends Controller
     {
         $token = (string) Str::uuid();
         session(['quiz_submit_token' => $token]);
+
         $quiz = Quiz::find($id);
         if ($quiz === null)
             abort(404);
+
         $questions = Question::with('answers')->where('quiz_id', $id)->get();
         return view("quizzes.play", compact('quiz', 'questions', 'token'));
     }
-    public function submit(Request $request, $id)
+    public function submit(Request $request, $quizId)
     {
         $submittedToken = $request->input('quiz_token');
         $sessionToken = session('quiz_submit_token');
         if (!$submittedToken || $submittedToken !== $sessionToken) {
-            return redirect()->back()->with('error', 'Este formulario ya fue enviado o es inválido.');
+            return redirect()->route("user.profile")->with('error', 'Este formulario ya fue enviado o es inválido.');
         }
         session()->forget('quiz_submit_token');
 
-        $questionsCount = Quiz::withCount('questions')->where('id', $id)->value('questions_count');
+        $questionsCount = Quiz::withCount('questions')->where('id', $quizId)->value('questions_count');
         $validated = $request->validate([
             'answers' => ['required', 'array', "size:$questionsCount"],
             'answers.*' => 'required|integer|exists:answers,id',
@@ -58,11 +60,11 @@ class QuizController extends Controller
 
         $userId = Auth::user() ? Auth::id() : 0;
         $attemptNumber = QuizAttempt::where('user_id', $userId)
-            ->where('quiz_id', $id)
+            ->where('quiz_id', $quizId)
             ->count() + 1;
         $attempt = QuizAttempt::create([
             'user_id' => $userId,
-            'quiz_id' => $id,
+            'quiz_id' => $quizId,
             "attempt_number" => $attemptNumber
         ]);
         foreach ($validated['answers'] as $questionId => $answerId) {
